@@ -14,7 +14,7 @@ You can metause our fancy new metaadmin metabot to get the admin to metaview you
 ### Site:
 When we look at the site mentioned in the description we are prompted to create an account, after that we can add friends and make posts.
 If we friend someone like admin, we are listed on their friends list but they not on ours. If we friend ourselves we see:
-```
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -126,7 +126,8 @@ If we friend someone like admin, we are listed on their friends list but they no
         </script>
     </body>
 </html>
-```
+
+
 The text in parenthesis is our display name.
 
 By creating a post with the text `<script>alert(1)</script>` I saw that the post section of the site was vulnerable to xss and xsrf.
