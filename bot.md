@@ -1,13 +1,14 @@
 # bot (pwn) by kaiphait  
 
-We got a Dockerfile, a libc, a linker, a binary and the source code,  
+We got a Dockerfile, a libc, a linker, a binary and the source code,
 which is why my first thought was a ret2libc attack but it turned out that was not necessary.
 
 First I checked the file and its mitigations:
 ```
 file ./bot
 
-bot: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=1ed799aea3b8082b9dadde68dd67684e6101badc, for GNU/Linux 3.2.0, with debug_info, not stripped
+bot: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, 
+BuildID[sha1]=1ed799aea3b8082b9dadde68dd67684e6101badc, for GNU/Linux 3.2.0, with debug_info, not stripped
 --
 checksec --file ./bot
 
@@ -64,7 +65,7 @@ int main(void) {
 ```
 
 Looking at how the binary gets its input, it's apparently vulnerable to a buffer overflow.
-First I built a little script to generate test payloads:
+First I built a little script to generate test-payloads:
 ```
 from pwn import *
 import sys
@@ -84,7 +85,7 @@ r < test
 
 ```
 
-But when I executed the binary with gdb, it did not cause the binary to crash since it exits  
+But when I executed the binary with gdb, it did not cause the binary to crash since it exits
 when an input does not equal any of the strings in the source code.
 
 My second try looked like:
@@ -113,7 +114,7 @@ $r8    : 0x6
 $r9    : 0x0               
 $r10   : 0x00007ffff7d84360  →  0x000f001a00007b95
 $r11   : 0x246             
-$r12   : 0x00007fffffffe018  →  0x00007fffffffe360  →  "/home/nanika/ctf/lactf/bot/bot"
+$r12   : 0x00007fffffffe018  →  0x00007fffffffe360  →  "/home/.../ctf/lactf/bot/bot"
 $r13   : 0x0000000000401182  →  <main+0> push rbp
 $r14   : 0x0               
 $r15   : 0x00007ffff7ffd040  →  0x00007ffff7ffe2e0  →  0x0000000000000000
