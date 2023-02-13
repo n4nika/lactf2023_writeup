@@ -43,7 +43,7 @@ print(flag)
 exit(0)
 
 ```
-First looking at the code, we have to correctly guess 0 or 1 150 consecutive times. 
+By looking at the code we see, that we have to correctly guess "0" or "1", 150 consecutive times, where the only clue is that "c" is multiplied by 6 if the bit is "1". 
 
 When we execute the script we get:
 ```
